@@ -1,11 +1,17 @@
 package dev.allmaciente;
 
+import com.google.gson.Gson;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Dotenv dotenv = Dotenv.configure().directory("src/main/resources").load();
 
         Scanner scanner = new Scanner(System.in);
@@ -18,7 +24,7 @@ public class Main {
         System.out.println("5) BOB  : Bolivian Boliviano");
         System.out.println("6) ARS  : Argentine Peso");
         System.out.println("==================================");
-        System.out.println("Select the currency you want to convert from:");
+        System.out.println("Select the currency you want to convert to:");
         int opCurrency = scanner.nextInt();
         String baseCurrency = "";
         switch (opCurrency){
@@ -49,6 +55,15 @@ public class Main {
             default:
                 System.out.println("Invalid selection.");
         }
-        System.out.println(dotenv.get("API_KEYS"));
+        String url_str = String.format("https://v6.exchangerate-api.com/v6/%s/latest/%s", dotenv.get("API_KEY"), baseCurrency);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url_str))
+                .build();
+        HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.body());
+        
     }
 }
