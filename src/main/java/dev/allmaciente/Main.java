@@ -1,9 +1,13 @@
 package dev.allmaciente;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.configure().directory("src/main/resources").load();
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Currency Converter!");
         System.out.println("==================================");
@@ -45,6 +49,6 @@ public class Main {
             default:
                 System.out.println("Invalid selection.");
         }
-        System.out.println(baseCurrency);
+        System.out.println(dotenv.get("API_KEYS"));
     }
 }
