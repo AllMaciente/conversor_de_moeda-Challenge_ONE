@@ -30,5 +30,18 @@ public class Coin {
     public String getBase_code() {
         return base_code;
     }
+
+    @Override
+    public String toString() {
+        return "Coin{" +
+                "base_code='" + base_code + '\'' +
+                ", usd=" + usd +
+                ", brl=" + brl +
+                ", clp=" + clp +
+                ", cop=" + cop +
+                ", bob=" + bob +
+                ", ars=" + ars +
+                '}';
+    }
 }
 
