@@ -31,6 +31,15 @@ public class Coin {
         return base_code;
     }
 
+    public void viewOptions(){
+        System.out.println(String.format("1) %s to USD (United States Dollar)", base_code));
+        System.out.println(String.format("2) %s to BRL (Brazilian Real)", base_code));
+        System.out.println(String.format("3) %s to CLP (Chilean Peso)", base_code));
+        System.out.println(String.format("4) %s to COP (Colombian Peso)", base_code));
+        System.out.println(String.format("5) %s to BOB (Bolivian Boliviano)", base_code));
+        System.out.println(String.format("6) %s to ARS (Argentine Peso)", base_code));
+    }
+
     @Override
     public String toString() {
         return "Coin{" +

@@ -1,6 +1,9 @@
 package dev.allmaciente;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dev.allmaciente.models.Coin;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
@@ -24,7 +27,7 @@ public class Main {
         System.out.println("5) BOB  : Bolivian Boliviano");
         System.out.println("6) ARS  : Argentine Peso");
         System.out.println("==================================");
-        System.out.println("Select the currency you want to convert to:");
+        System.out.println("Select the currency you want to convert from:");
         int opCurrency = scanner.nextInt();
         String baseCurrency = "";
         switch (opCurrency){
@@ -63,7 +66,35 @@ public class Main {
                 .build();
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
-        
+        Gson gson = new Gson();
+        Coin coin = gson.fromJson(response.body(), Coin.class);
+
+        coin.viewOptions();
+        System.out.println("Select the currency you want to convert to:");
+        int opConvert = scanner.nextInt();
+        System.out.println("Enter the amount you want to convert:");
+        float amount = scanner.nextFloat();
+        switch (opConvert){
+            case 1:
+                System.out.println(String.format("The amount of %.2f %s is equal to %.2f USD", amount, baseCurrency, coin.exchangeToUSD(amount)));
+                break;
+            case 2:
+                System.out.println(String.format("The amount of %.2f %s is equal to %.2f BRL", amount, baseCurrency, coin.exchangeToBRL(amount)));
+                break;
+            case 3:
+                System.out.println(String.format("The amount of %.2f %s is equal to %.2f CLP", amount, baseCurrency, coin.exchangeToCLP(amount)));
+                break;
+            case 4:
+                System.out.println(String.format("The amount of %.2f %s is equal to %.2f COP", amount, baseCurrency, coin.exchangeToCOP(amount)));
+                break;
+            case 5:
+                System.out.println(String.format("The amount of %.2f %s is equal to %.2f BOB", amount, baseCurrency, coin.exchangeToBOB(amount)));
+                break;
+            case 6:
+                System.out.println(String.format("The amount of %.2f %s is equal to %.2f ARS", amount, baseCurrency, coin.exchangeToARS(amount)));
+                break;
+            default:
+                System.out.println("Invalid selection.");
+        }
     }
 }
