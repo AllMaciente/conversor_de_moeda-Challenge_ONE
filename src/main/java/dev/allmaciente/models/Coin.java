@@ -1,32 +1,32 @@
 package dev.allmaciente.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Coin {
     private String base_code;
-    private float usd;
-    private float brl;
-    private float clp;
-    private float cop;
-    private float bob;
-    private float ars;
+
+    @SerializedName("conversion_rates")
+    private Rates conversionRates;
 
     public float exchangeToUSD(float amount){
-        return amount * this.usd;
+        return amount * conversionRates.usd;
     }
     public float exchangeToBRL(float amount){
-        return amount * this.brl;
+        return amount * conversionRates.brl;
     }
     public float exchangeToCLP(float amount){
-        return amount * this.clp;
+        return amount * conversionRates.clp;
     }
     public float exchangeToCOP(float amount){
-        return amount * this.cop;
+        return amount * conversionRates.cop;
     }
     public float exchangeToBOB(float amount){
-        return amount * this.bob;
+        return amount * conversionRates.bob;
     }
     public float exchangeToARS(float amount){
-        return amount * this.ars;
+        return amount * conversionRates.ars;
     }
+
     public String getBase_code() {
         return base_code;
     }
@@ -35,13 +35,34 @@ public class Coin {
     public String toString() {
         return "Coin{" +
                 "base_code='" + base_code + '\'' +
-                ", usd=" + usd +
-                ", brl=" + brl +
-                ", clp=" + clp +
-                ", cop=" + cop +
-                ", bob=" + bob +
-                ", ars=" + ars +
+                ", conversionRates=" + conversionRates +
                 '}';
     }
-}
 
+    private static class Rates {
+        @SerializedName("USD")
+        private float usd;
+        @SerializedName("BRL")
+        private float brl;
+        @SerializedName("CLP")
+        private float clp;
+        @SerializedName("COP")
+        private float cop;
+        @SerializedName("BOB")
+        private float bob;
+        @SerializedName("ARS")
+        private float ars;
+
+        @Override
+        public String toString() {
+            return "Rates{" +
+                    "usd=" + usd +
+                    ", brl=" + brl +
+                    ", clp=" + clp +
+                    ", cop=" + cop +
+                    ", bob=" + bob +
+                    ", ars=" + ars +
+                    '}';
+        }
+    }
+}
